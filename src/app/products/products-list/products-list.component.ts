@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 import { ProductDto } from '../shared/product.dto';
 import { ProductsService } from '../shared/products.service';
 
@@ -10,10 +12,17 @@ import { ProductsService } from '../shared/products.service';
 })
 export class ProductsListComponent implements OnInit {
   products$: Observable<ProductDto[]> | undefined;
+  error: any;
 
   constructor(private _productService: ProductsService) {}
 
   ngOnInit(): void {
-    this.products$ = this._productService.getAll();
+    this.products$ = this._productService.getAll()
+      .pipe(
+        catchError(err => {
+          this.error = err;
+          throw err;
+        })
+      );
   }
 }

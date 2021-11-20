@@ -5,4 +5,7 @@
       {{product.id}} - {{product.name}}
   </li>
 </ul>
-<ng-template #loading>...loading</ng-template>
+<ng-template #loading>
+  <p *ngIf="!error else errorTemplate">...loading</p>
+  <ng-template #errorTemplate>{{error?.message}}</ng-template>
+</ng-template>

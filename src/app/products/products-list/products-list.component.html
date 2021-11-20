@@ -1,6 +1,6 @@
 <h1>Products</h1>
 
-<ul *ngIf="products" >
+<ul *ngIf="products$ | async as products" >
   <li *ngFor="let product of products">
       {{product.id}} - {{product.name}}
   </li>

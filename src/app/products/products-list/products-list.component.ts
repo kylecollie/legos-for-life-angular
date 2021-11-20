@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ProductDto } from '../shared/product.dto';
 import { ProductsService } from '../shared/products.service';
 
@@ -8,14 +9,11 @@ import { ProductsService } from '../shared/products.service';
   styleUrls: ['./products-list.component.scss'],
 })
 export class ProductsListComponent implements OnInit {
-  products: ProductDto[] | undefined;
+  products$: Observable<ProductDto[]> | undefined;
+
   constructor(private _productService: ProductsService) {}
 
   ngOnInit(): void {
-    this._productService
-      .getAll()
-      .subscribe(products => {
-        this.products = products;
-    });
+    this.products$ = this._productService.getAll();
   }
 }

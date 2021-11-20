@@ -1,7 +1,8 @@
 <h1>Products</h1>
 
-<ul *ngIf="products$ | async as products" >
+<ul *ngIf="products$ | async as products else loading" >
   <li *ngFor="let product of products">
       {{product.id}} - {{product.name}}
   </li>
 </ul>
+<ng-template #loading>...loading</ng-template>

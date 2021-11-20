@@ -1,1 +1,7 @@
 <h1>Products</h1>
+
+<ul *ngIf="products" >
+  <li *ngFor="let product of products">
+      {{product.id}} - {{product.name}}
+  </li>
+</ul>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ProductDto } from './product.dto';
 
 @Injectable({
@@ -10,6 +11,6 @@ export class ProductsService {
   constructor(private _http: HttpClient) {}
 
   getAll(): Observable<ProductDto[]> {
-    return this._http.get<ProductDto[]>('https://localhost:5001/api/Product');
+    return this._http.get<ProductDto[]>(environment.api + '/api/Product');
   }
 }

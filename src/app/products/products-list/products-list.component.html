@@ -1,9 +1,14 @@
 <h1>Products</h1>
 
 <ul *ngIf="products$ | async as products else loading" >
-  <li *ngFor="let product of products">
-      {{product.id}} - {{product.name}}
-  </li>
+  <span *ngIf="products && products.length > 0 else noProducts">
+    <li *ngFor="let product of products">
+        {{product.id}} - {{product.name}}
+    </li>
+  </span>
+  <ng-template #noProducts>
+    <h5>No Prodcuts found</h5>
+  </ng-template>
 </ul>
 <ng-template #loading>
   <p *ngIf="!error else errorTemplate">...loading</p>

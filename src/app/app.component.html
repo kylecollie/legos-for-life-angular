@@ -1,4 +1,9 @@
-<a routerLink="auth/login" style="margin: 5px">Login</a>
+<a routerLink="auth/login" style="margin: 5px" *ngIf="!jwt; else logoutTemp"
+  >Login</a
+>
+<ng-template #logoutTemp>
+  <a [routerLink]="[]" (click)="logout()" style="margin: 5px">Logout</a>
+</ng-template>
 <a routerLink="" style="margin: 5px">Home</a>
 <a routerLink="products">Products</a>
 <router-outlet></router-outlet>

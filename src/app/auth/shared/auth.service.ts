@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { LoginDto } from './login.dto';
 import { TokenDto } from './token.dto';
@@ -34,7 +34,7 @@ export class AuthService {
   logout(): Observable<boolean> {
     localStorage.removeItem(jwtToken);
     this.isLoggedIn$.next(null);
-    return of(true);
+    return of(true).pipe(take(1));
   }
 
   getToken(): string | null {

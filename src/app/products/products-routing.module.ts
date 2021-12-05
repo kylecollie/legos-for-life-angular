@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../auth/guards/auth.guard';
 import { ProductsListComponent } from './products-list/products-list.component';
 
-const routes: Routes = [{ path: '', component: ProductsListComponent }];
+const routes: Routes = [
+  { path: '', component: ProductsListComponent, canActivate: [AuthGuard] },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

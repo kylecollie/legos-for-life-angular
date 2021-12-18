@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
     username: [''],
     password: [''],
   });
+  err: string | undefined;
 
   constructor(
     private _fb: FormBuilder,
@@ -27,7 +28,10 @@ export class LoginComponent implements OnInit {
     const loginDto = this.loginForm.value as LoginDto;
     this._auth.login(loginDto).subscribe((token) => {
       if (token && token.jwt) {
+        this.err = undefined;
         this._router.navigateByUrl('products');
+      } else if (token && token.message) {
+        this.err = token.message;
       }
       console.log('::Token:: ', token);
     });

@@ -6,9 +6,10 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from '../shared/auth.service';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -20,13 +21,26 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> {
-    return this._auth.isLoggedIn$.pipe(
-      map((token) => {
-        if (token && token.length > 0) {
-          return true;
-        }
-        return this._router.parseUrl('/auth/login');
-      })
-    );
+    const currentToken = this._auth.getToken();
+    const isValid = this.isTokenValid(currentToken);
+    return isValid
+      ? of(true)
+      : this._auth.logout().pipe(
+          map(() => {
+            return this._router.parseUrl('/auth/login');
+          })
+        );
   }
+
+  private isTokenValid(token: string | null) {
+    if (!token || token.length <= 0) {
+      return false;
+    }
+    const decoded = jwt_decode(token) as DecodedToken;
+    return Date.now() <= decoded.exp * 1000;
+  }
+}
+
+interface DecodedToken {
+  exp: number;
 }

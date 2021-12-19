@@ -3,7 +3,8 @@
 >
 <ng-template #logoutTemp>
   <a [routerLink]="[]" (click)="logout()" style="margin: 5px">Logout</a>
+  <a routerLink="products" style="margin: 5px">Products</a>
+  <a routerLink="auth/list" style="margin: 5px">Users</a>
 </ng-template>
 <a routerLink="" style="margin: 5px">Home</a>
-<a routerLink="products">Products</a>
 <router-outlet></router-outlet>

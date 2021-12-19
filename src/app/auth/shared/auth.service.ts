@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { AuthUserDto } from './auth-user.dto';
 import { LoginDto } from './login.dto';
 import { TokenDto } from './token.dto';
 
@@ -39,5 +40,12 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem(jwtToken);
+  }
+
+  createAuthUser(userDto: AuthUserDto): Observable<AuthUserDto> {
+    return this._http.post<AuthUserDto>(
+      environment.api + '/api/auth/create',
+      userDto
+    );
   }
 }

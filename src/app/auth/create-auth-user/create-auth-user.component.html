@@ -1,1 +1,8 @@
-<p>create-auth-user works!</p>
+<h1>New User</h1>
+<form [formGroup]="userForm" (ngSubmit)="create()">
+  <label for="username">Username</label>
+  <input id="username" type="text" formControlName="username" />
+  <button type="submit">Create</button>
+</form>
+<div *ngIf="err" class="error">{{ err }}</div>
+<div *ngIf="message" class="message">{{ message }}</div>
